@@ -7,7 +7,7 @@ Users can view products, see product details, and after logging in, access a pro
 ---
 
 ## Live Demo
-[View Live Site](hhttp://assaitment-10.vercel.app/)
+Live Link : (hhttp://assaitment-10.vercel.app/)
 
 ## GitHub Repository
 [View Repository](https://github.com/skrased2006/Scic_next_js_project)
