@@ -18,5 +18,5 @@ export default async function AddProductPage() {
     );
   }
 
-  return <AddProductForm />; // Client Component here is fine
+  return <AddProductForm />; 
 }

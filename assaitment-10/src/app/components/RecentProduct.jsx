@@ -10,7 +10,7 @@ export default function RecentProduct() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/recentProduct");
+        const res = await fetch("https://server-black-gamma-21.vercel.app/recentProduct");
         const data = await res.json();
         // latest first
         const sorted = data.sort(

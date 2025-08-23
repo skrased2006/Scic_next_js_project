@@ -13,7 +13,7 @@ export default function ProductDetailsPage({ params }) {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/products/${id}`);
+        const res = await fetch(`https://server-black-gamma-21.vercel.app/products/${id}`);
         if (!res.ok) throw new Error("Failed to fetch product");
         const data = await res.json();
         setProduct(data);
@@ -27,9 +27,22 @@ export default function ProductDetailsPage({ params }) {
     fetchProduct();
   }, [id]);
 
-  if (loading)
-    return <p className="text-center py-20 text-gray-500 animate-pulse">Loading...</p>;
-
+ if (loading) {
+    return (
+      <div className="max-w-6xl mx-auto py-16 px-6 animate-pulse">
+        <div className="flex flex-col md:flex-row gap-12">
+          <div className="md:w-1/2 bg-gray-300 h-96 rounded-lg"></div>
+          <div className="md:w-1/2 flex flex-col gap-4">
+            <div className="h-8 bg-gray-300 rounded w-3/4"></div>
+            <div className="h-4 bg-gray-300 rounded w-full"></div>
+            <div className="h-4 bg-gray-300 rounded w-full"></div>
+            <div className="h-6 bg-gray-300 rounded w-1/2 mt-4"></div>
+            <div className="h-10 bg-gray-300 rounded w-1/2 mt-6"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (error || !product)
     return (
       <div className="text-center py-20">

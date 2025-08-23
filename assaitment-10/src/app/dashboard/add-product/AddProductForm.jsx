@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function AddProductForm() {
   const [name, setName] = useState("");
@@ -10,7 +11,6 @@ export default function AddProductForm() {
   const [image, setImage] = useState(""); // URL
   const [category, setCategory] = useState("Electronics");
   const [stock, setStock] = useState("");
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -18,37 +18,37 @@ export default function AddProductForm() {
     e.preventDefault();
     setLoading(true);
 
-    const res = await fetch("http://localhost:5000/products", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, description, price, image, category, stock }),
-    });
+    try {
+      const res = await fetch("https://server-black-gamma-21.vercel.app/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, description, price, image, category, stock }),
+      });
 
-    const data = await res.json();
-    setLoading(false);
+      const data = await res.json();
+      setLoading(false);
 
-    if (res.ok) {
-      setMessage("Product added successfully!");
-      setName("");
-      setDescription("");
-      setPrice("");
-      setImage("");
-      setCategory("Electronics");
-      setStock("");
-      router.refresh();
-    } else {
-      setMessage(`Error: ${data.message}`);
+      if (res.ok) {
+        toast.success("✅ Product added successfully!");
+        setName("");
+        setDescription("");
+        setPrice("");
+        setImage("");
+        setCategory("Electronics");
+        setStock("");
+        router.refresh();
+      } else {
+        toast.error(`❌ Error: ${data.message}`);
+      }
+    } catch (err) {
+      setLoading(false);
+      toast.error("Something went wrong!");
     }
   };
 
   return (
     <div className="max-w-xl mx-auto py-16 px-6">
       <h1 className="text-3xl font-bold mb-6">Add New Product</h1>
-      {message && (
-        <p className={`mb-4 ${message.includes("Error") ? "text-red-600" : "text-green-600"}`}>
-          {message}
-        </p>
-      )}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -83,7 +83,6 @@ export default function AddProductForm() {
           className="border px-4 py-2 rounded"
         />
 
-        {/* Category Dropdown */}
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}

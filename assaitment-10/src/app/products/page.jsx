@@ -11,7 +11,7 @@ export default function ProductsPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/products");
+        const res = await fetch("https://server-black-gamma-21.vercel.app/products");
         const data = await res.json();
         setProducts(data);
       } catch (err) {
@@ -32,12 +32,23 @@ export default function ProductsPage() {
       ? products
       : products.filter((p) => p.category === selectedCategory);
 
-  if (loading)
+  // ✅ Loading state এ skeleton দেখানো হচ্ছে
+  if (loading) {
     return (
-      <p className="text-center py-20 text-gray-500 text-lg animate-pulse">
-        Loading products...
-      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 p-6">
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="border rounded-xl shadow-md p-6 animate-pulse"
+          >
+            <div className="bg-gray-300 h-40 w-full rounded-md mb-4"></div>
+            <div className="h-6 bg-gray-300 rounded w-3/4 mx-auto mb-3"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
+          </div>
+        ))}
+      </div>
     );
+  }
 
   return (
     <div className="max-w-10/12 mx-auto py-16 px-6">
